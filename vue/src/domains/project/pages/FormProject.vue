@@ -58,10 +58,35 @@ async function submit() {
         return;
     }
 
-    await axios.post('http://localhost:3000/project', {
-        start: convertDateToTimestamp(timeSheetFormValues.dateReal.value),
-        end: convertDateToTimestamp(timeSheetFormValues.endDateReal.value),
-    });
+    const startDate = new Date(timeSheetFormValues.dateReal.value);
+    const endDate = new Date(timeSheetFormValues.endDateReal.value);
+
+    // Vérifiez si l'heure de début est entre minuit et 6h du matin
+    if (startDate.getHours() >= 0 && startDate.getHours() < 6) {
+        const sixAm = new Date(startDate);
+        sixAm.setHours(6, 0, 0, 0);
+
+        // Premier appel : de startDate à 6h du matin
+        await axios.post('https://pocapi.streamshare.ovh/project', {
+            start: convertDateToTimestamp(startDate),
+            end: convertDateToTimestamp(sixAm),
+            sup: true,
+        });
+
+        // Deuxième appel : de 6h du matin à endDate
+        await axios.post('https://pocapi.streamshare.ovh/project', {
+            start: convertDateToTimestamp(sixAm),
+            end: convertDateToTimestamp(endDate),
+            sup: false,
+        });
+    } else {
+        // Un seul appel si l'heure de début est après 6h du matin
+        await axios.post('https://pocapi.streamshare.ovh/project', {
+            start: convertDateToTimestamp(startDate),
+            end: convertDateToTimestamp(endDate),
+            sup: false,
+        });
+    }
 
     router.push({ name: routerPageName.TABLE_TIME_SHEET });
 }

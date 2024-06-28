@@ -1,5 +1,30 @@
-import { TimeSheetList } from "../composables/useGetTimeSheet";
+import type { TimeSheet } from "../composables/useGetTimeSheet";
 import { z } from "zod";
+
+const TimeSheetList: TimeSheet[] = [
+    {
+        id: 1,
+        project: "R.000002",
+        description: "Intervention Ligne Paris Amiens",
+        otp: "R.0000021",
+        description2: "Trajet",
+        dateRequested: "2024-06-27 04:00:00",
+        endDateRequested: "2024-06-27 10:00:00",
+        dateReal: "",
+        endDateReal: "",
+    },
+    {
+        id: 2,
+        project: "R.000002",
+        description: "Intervention Ligne Paris Amiens",
+        otp: "R.0000022",
+        description2: "Présence",
+        dateRequested: "2024-06-27 10:00:00",
+        endDateRequested: "2024-06-27 16:00:00",
+        dateReal: "",
+        endDateReal: "",
+    },
+]
 
 export function useTimeSheetForm(id: number) {
 
