@@ -34,7 +34,6 @@ export class CsrfTimeSheetPostInterceptor
 
     return next.handle().pipe(
       tap(async () => {
-        // Mettre à jour le token CSRF si nécessaire après la requête
         await this.fetchCsrfToken(this.csrfUrl);
       }),
     );

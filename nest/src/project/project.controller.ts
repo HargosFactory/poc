@@ -35,11 +35,11 @@ export class ProjectController {
     @Res() res: Response,
   ) {
     try {
-      let pro = "R.0000021"
+      let pro = 'R.0000021';
       const file = fs.readFileSync(path.join(__dirname, 'mock.json'), 'utf8');
       const mock = JSON.parse(file);
       if (mock.data[0].dateReal == '') {
-        pro = "R.0000021"
+        pro = 'R.0000021';
         mock.data[0].dateReal = formatTimestamp(Number(body.start));
         mock.data[0].endDateReal = formatTimestamp(Number(body.end));
         fs.writeFileSync(
@@ -48,7 +48,7 @@ export class ProjectController {
           'utf8',
         );
       } else {
-        pro = "R.0000022"
+        pro = 'R.0000022';
         mock.data[1].dateReal = formatTimestamp(Number(body.start));
         mock.data[1].endDateReal = formatTimestamp(Number(body.end));
         fs.writeFileSync(
